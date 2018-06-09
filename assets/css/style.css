@@ -1,0 +1,116 @@
+body {
+    box-sizing: border-box;
+}
+
+header {
+
+}
+
+main {
+    width: 100%;
+    max-width: 900px;
+    min-height: 600px;
+
+    display: flex;
+    flex-direction: row-reverse;
+
+    margin: 24px auto;
+}
+
+section {
+    width: 75%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    padding: 0 24px;
+}
+
+aside {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 12px;
+}
+
+/* header::after, section::after {
+    content: "";
+    display: table;
+    clear: both;
+} */
+
+#div-enemies {
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.character {
+    width: 110px;
+    height: 110px;
+    border-radius: 3em;
+
+    margin: 0 6px;
+}
+
+#div-battle {
+    height: 50%;
+}
+
+#div-stats {
+    display: flex;
+    flex-direction: row-reverse;
+
+    position: relative;
+    height: 10%;
+}
+
+#fight-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    position: relative;
+    right: -10px;
+    top: -20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 3em;
+}
+
+#div-healthBar {
+    height: 100%;
+    border: none;
+    border-left: 1px solid #333;
+}
+
+footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    padding: 20px 0 10px 0;
+    background-color:#666666;
+    color: #cccccc;
+    text-align: center;
+    font-size: 12px;
+    border-top: 3px solid #ccc;
+}
+
+.wf1 {
+    background-color: #fff;
+    border: 1px solid #333;
+}
+
+.wf2 {
+    background-color: #ddd;
+    border: 1px solid #333;
+}
+
+.wf3 {
+    background-color: #bbb;
+    border: 1px solid #333;
+}
