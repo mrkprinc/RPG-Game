@@ -9,7 +9,9 @@
         <link rel="stylesheet" type="text/css" href="./assets/css/reset.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+
     </head>
     
     <body>
@@ -18,29 +20,33 @@
     
         </header>
     
-        <main class="wf1">
+        <main class="">
 
-            <section class="wf2">
+            <section class="">
                 <!-- game area -->
 
-                <div id="div-enemies" class="wf3">
+                <div id="div-enemies" class="wf3 fade">
                     <!-- enemies -->
 
-                    <div class="character wf2">
-                        one
+                    <div id="enemy-rey" class="character rey">
+                        <span class="span-stat">100</span>
                     </div>
 
-                    <div class="character wf2">
-                        two
+                    <div id="enemy-snoke" class="character snoke">
+                        <span class="span-stat">100</span>
                     </div>
 
-                    <div class="character wf2">
-                        three
+                    <div id="enemy-kylo" class="character kylo">
+                        <span class="span-stat">100</span>
+                    </div>
+
+                    <div id="enemy-poe" class="character poe">
+                        <span class="span-stat">100</span>
                     </div>
 
                 </div>
 
-                <div id="div-battle" class="wf3">
+                <div id="div-battle" class="">
                     <!-- battle area -->
 
                     <div id="div-fighter" class="battle-spot wf3"></div>
@@ -49,28 +55,17 @@
 
                     <!-- overlay for selections -->
 
-                    <div id="div-selectionOverlay" class="wf1">
-
-                        <div class="character wf2">
-                            one
-                        </div>
-    
-                        <div class="character wf2">
-                            two
-                        </div>
-    
-                        <div class="character wf2">
-                            three
-                        </div>
+                    <div class="div-selectionOverlay wf1">
 
                         <span id="span-selectText">
                             Choose your character
                         </span>
+
                     </div>
                     
                 </div>
 
-                <div id="div-stats" class="wf3">
+                <div id="div-stats" class="wf3 fade">
                     <!-- fight button and healthbar -->
 
                     <div id="fight-button" class="wf1">
@@ -87,7 +82,7 @@
 
             </section>
 
-            <aside class="wf3">
+            <aside class="">
                 <!-- directions go here -->
                 <ul>
                     <li>1. Choose your character.</li>
