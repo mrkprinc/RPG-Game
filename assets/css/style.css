@@ -57,13 +57,17 @@ aside {
     clear: both;
 } */
 
-#div-enemies {
+.div-characters {
     display: flex;
     justify-content: center;
     align-items: center;
 
     border: 3px solid darkred;
     border-radius: 1em;
+}
+
+.div-characters > .character {
+    opacity: 0.6;
 }
 
 .character {
@@ -75,11 +79,22 @@ aside {
     margin: 6px;
     flex-shrink: 1;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
     background-size: contain;
     background-repeat: no-repeat;
     background-color: #333;
-    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.select-time:hover {
+    opacity: 1;
+}
+
+.fighter {
+    border: 2px solid green;
 }
 
 .span-stat {
@@ -88,6 +103,23 @@ aside {
     left: 10px;
     background-color: white;
     padding: 2px;
+}
+
+.dead > .span-stat {
+    display: none;
+}
+
+.dead-X {
+    position: relative;
+    bottom: 12px;
+    color: red;
+    font-size: 175px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.dead > .dead-X {
+    opacity: 1;
 }
 
 .rey {
@@ -115,8 +147,8 @@ aside {
 }
 
 .battle-spot {
-    width: 110px;
-    height: 110px;
+    width: 122px;
+    height: 122px;
     box-shadow: 0px 0px 8px 4px;
 }
 
@@ -156,6 +188,7 @@ aside {
     flex-direction: row-reverse;
 
     position: relative;
+    z-index: 10;
     height: 10%;
     border: 3px solid green;
     border-radius: 1em;
@@ -167,9 +200,11 @@ aside {
     justify-content: center;
     text-align: center;
 
-    position: relative;
+    position: absolute;
     right: -10px;
     top: -20px;
+    z-index: 10;
+
     width: 100px;
     height: 100px;
     border: 3px dashed green;
@@ -180,9 +215,12 @@ aside {
 }
 
 #div-healthBar {
+    position: relative;
+    /* left: 20px; */
     height: 100%;
-    border: none;
-    border-left: 1px solid #333;
+    width: 110%;
+    background-image: linear-gradient(to right, green, #123);
+    border-radius: 0.5em;
 }
 
 footer {
