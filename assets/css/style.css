@@ -89,7 +89,7 @@ aside {
     transition: opacity 0.3s;
 }
 
-.select-time:hover {
+.selectable:hover {
     opacity: 1;
 }
 
@@ -116,6 +116,7 @@ aside {
     font-size: 175px;
     opacity: 0;
     transition: opacity 0.3s;
+    cursor: default;
 }
 
 .dead > .dead-X {
@@ -163,6 +164,7 @@ aside {
 
     width: 80%;
     height: 300px;
+    display: none;
     opacity: 0;
     transition: opacity 0.75s;
 
@@ -171,7 +173,7 @@ aside {
 }
 
 .showOverlay {
-    opacity: 0.95;
+    display: flex;
 }
 
 .fadeMain {
