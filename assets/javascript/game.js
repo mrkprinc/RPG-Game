@@ -1,15 +1,24 @@
 $(document).ready(function() {
     
+    
     // global variables
 
+    // represent "modes" for selecting characters and fighting
     var selectFighterOn = false;
     var selectOpponentOn = false;
     var fightOn = false;
+
+    // will point to character objects
     var fighter = null;
     var opponent = null;
+
+    // will increment for every attack in a game
     var round = 0;
     
+    
     // characters
+
+    var allChars = [objRey, objSnoke, objKylo, objPoe];
     
     var objRey = {
         HP: 100,
@@ -44,6 +53,13 @@ $(document).ready(function() {
         }
     }
 
+    // function attackby(obj) {
+    //     if(opponent != null) {
+    //         opponent.HP -= obj.attackPower * round;
+    //         opponent.updateHP();
+    //     }
+    // }
+
     var objSnoke = {
         HP: 100,
         initialHP: 100,
@@ -63,6 +79,18 @@ $(document).ready(function() {
         },
         updateHP: function() {
             $("#snoke > .span-stat").html(this.HP);
+        },
+        attack: function() {
+            if(opponent != null) {
+                opponent.HP -= this.attackPower * round;
+                opponent.updateHP();
+            }
+        },
+        counterAttack: function() {
+            if(fighter != null) {
+                fighter.HP -= this.counterPower;
+                fighter.updateHP();
+            }
         }
     }
 
@@ -84,6 +112,18 @@ $(document).ready(function() {
         },
         updateHP: function() {
             $("#kylo > .span-stat").html(this.HP);
+        },
+        attack: function() {
+            if(opponent != null) {
+                opponent.HP -= this.attackPower * round;
+                opponent.updateHP();
+            }
+        },
+        counterAttack: function() {
+            if(fighter != null) {
+                fighter.HP -= this.counterPower;
+                fighter.updateHP();
+            }
         }
     }
 
@@ -105,13 +145,32 @@ $(document).ready(function() {
         },
         updateHP: function() {
             $("#poe > .span-stat").html(this.HP);
+        },
+        attack: function() {
+            if(opponent != null) {
+                opponent.HP -= this.attackPower * round;
+                opponent.updateHP();
+            }
+        },
+        counterAttack: function() {
+            if(fighter != null) {
+                fighter.HP -= this.counterPower;
+                fighter.updateHP();
+            }
         }
     }
+    
 
     // global functions
 
     function newGame() {
-        // put reset functions here
+
+        // reset
+
+        for(i=0; i<allChars.length; i++) {
+            allChars[i].reset();
+            allChars[i].select.appendTo(".div-characters");
+        }
 
         // let player select fighter
 
@@ -178,6 +237,8 @@ $(document).ready(function() {
             
             // move opponent to position
             $(this).appendTo("#div-opponent");
+
+            // go to fight mode
             selectOpponentOn = false;
             $(".character").removeClass("selectable");
             fightOn = true;
@@ -190,7 +251,7 @@ $(document).ready(function() {
         if(fightOn == true) {
             $(".fighter").animate({left:"+=30"}, 200).animate({left:"-=40"}, 200).animate({left:"+=10"});
             var b = "40%";
-            $("#div-healthBar").animate({width:b}, 1000);
+            $("#div-healthBar").css("width", b);
         }
     })
 
