@@ -186,6 +186,29 @@ $(document).ready(function() {
         selectOpponentOn = true;
     }
 
+    function checkGame() {
+        // check for defeats, win/loss
+    }
+
+    function win() {
+        fighter.select.appendTo($(".div-overlay"));
+        $("#span-overlayText").text("You win!");
+        $(".div-selectionOverlay").addClass("fighter");
+        showOverLay();
+    }
+
+    function lose() {
+        opponent.select.appendTo($(".div-overlay"));
+        $("#span-overlayText").text("You lose!");
+        showOverLay();
+    }
+
+    function showOverLay() {
+
+        $(".fade").addClass("fadeMain");
+        $(".div-overlay").addClass("showOverlay").animate({opacity:1});
+    }
+
 
     // click listeners
 
@@ -249,9 +272,20 @@ $(document).ready(function() {
     $("#fight-button").on("click", function() {
 
         if(fightOn == true) {
+           
+            // animation
             $(".fighter").animate({left:"+=30"}, 200).animate({left:"-=40"}, 200).animate({left:"+=10"});
+            $(".fighter").delay(500).animate({left:"-=30"}, 200).animate({left:"+=40"}, 200).animate({left:"-=10"});
+
+            // change HP for each
+            fighter.attack();
+            opponent.counterAttack();
+
+            // adjust health bar
             var b = "40%";
             $("#div-healthBar").css("width", b);
+
+            //check game
         }
     })
 
@@ -260,10 +294,5 @@ $(document).ready(function() {
 
     newGame();
 
-
-
-    // overlay
-    // $(".fade").addClass("fadeMain");
-    // $(".div-selectionOverlay").addClass("showOverlay").animate({opacity:1});
 })
 
