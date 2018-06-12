@@ -167,11 +167,6 @@ $(document).ready(function() {
 
         // reset
 
-        for(i=0; i<allChars.length; i++) {
-            allChars[i].reset();
-            allChars[i].select.appendTo(".div-characters");
-        }
-
         // let player select fighter
 
         $(".character").addClass("selectable");
@@ -193,20 +188,21 @@ $(document).ready(function() {
     function win() {
         fighter.select.appendTo($(".div-overlay"));
         $("#span-overlayText").text("You win!");
-        $(".div-selectionOverlay").addClass("fighter");
+        $(".div-overlay").css("border", "2px solid green");
         showOverLay();
     }
 
     function lose() {
         opponent.select.appendTo($(".div-overlay"));
         $("#span-overlayText").text("You lose!");
+        $(".div-overlay").css("border", "2px solid red");
         showOverLay();
     }
 
     function showOverLay() {
 
         $(".fade").addClass("fadeMain");
-        $(".div-overlay").addClass("showOverlay").animate({opacity:1});
+        $(".div-overlay").addClass("showOverlay").animate({opacity:0.9});
     }
 
 
@@ -220,7 +216,6 @@ $(document).ready(function() {
             switch($(this).attr("id")) {
                 case "rey":
                     fighter = objRey;
-                    alert("this worked");
                     break;
                 case "snoke":
                     fighter = objSnoke;
@@ -245,7 +240,6 @@ $(document).ready(function() {
             switch($(this).attr("id")) {
                 case "rey":
                     opponent = objRey;
-                    alert("this worked");
                     break;
                 case "snoke":
                     opponent = objSnoke;
@@ -271,18 +265,25 @@ $(document).ready(function() {
 
     $("#fight-button").on("click", function() {
 
+        console.log(selectFighterOn, selectOpponentOn, fightOn);
+        
         if(fightOn == true) {
            
+            round++;
+
             // animation
-            $(".fighter").animate({left:"+=30"}, 200).animate({left:"-=40"}, 200).animate({left:"+=10"});
-            $(".fighter").delay(500).animate({left:"-=30"}, 200).animate({left:"+=40"}, 200).animate({left:"-=10"});
+            fighter.select.animate({left:"+=30"}, 200).animate({left:"-=40"}, 200).animate({left:"+=10"});
+            opponent.select.delay(200).animate({left:"-=30"}, 200).animate({left:"+=40"}, 200).animate({left:"-=10"});
 
             // change HP for each
             fighter.attack();
             opponent.counterAttack();
 
+            console.log(fighter.HP, opponent.HP, round);
+
             // adjust health bar
-            var b = "40%";
+            var b = fighter.HP / fighter.initialHP * 100 + "%";
+            console.log(b);
             $("#div-healthBar").css("width", b);
 
             //check game
