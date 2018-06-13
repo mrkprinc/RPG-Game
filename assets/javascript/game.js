@@ -14,27 +14,29 @@ $(document).ready(function() {
 
     // will increment for every attack in a game
     var round = 0;
-    
+    var opponentsRemaining = 3;
     
     // characters
-
-    var allChars = [objRey, objSnoke, objKylo, objPoe];
     
     var objRey = {
+        id: "rey",
         HP: 100,
         initialHP: 100,
-        attackPower: 10,
+        attackPower: 55,
         counterPower: 10,
         isAlive: true,
         select: $("#rey"),
         dead: function() {
             this.isAlive = false;
+            this.select.appendTo(".div-characters");
             this.select.addClass("dead");
         },
         reset: function() {
-            this.HP = 100;
+            this.HP = this.initialHP;
+            this.updateHP();
             this.isAlive = true;
-            this.select.removeClass("dead");
+            this.select.removeClass("dead fighter");
+            this.select.appendTo(".div-characters");
         },
         updateHP: function() {
             $("#rey > .span-stat").html(this.HP);
@@ -46,36 +48,33 @@ $(document).ready(function() {
             }
         },
         counterAttack: function() {
-            if(fighter != null) {
+            if(fighter != null && this.isAlive == true) {
                 fighter.HP -= this.counterPower;
                 fighter.updateHP();
             }
         }
     }
 
-    // function attackby(obj) {
-    //     if(opponent != null) {
-    //         opponent.HP -= obj.attackPower * round;
-    //         opponent.updateHP();
-    //     }
-    // }
-
     var objSnoke = {
+        id: "snoke",
         HP: 100,
         initialHP: 100,
         attackPower: 10,
-        counterPower: 10,
+        counterPower: 50,
         isAlive: true,
         select: $(".snoke"),
         selectHP: $("#snoke > .span-stat"),
         dead: function() {
             this.isAlive = false;
+            this.select.appendTo(".div-characters");
             this.select.addClass("dead");
         },
         reset: function() {
-            this.HP = 100;
+            this.HP = this.initialHP;
+            this.updateHP();
             this.isAlive = true;
-            this.select.removeClass("dead");
+            this.select.removeClass("dead fighter");
+            this.select.appendTo(".div-characters");
         },
         updateHP: function() {
             $("#snoke > .span-stat").html(this.HP);
@@ -87,7 +86,7 @@ $(document).ready(function() {
             }
         },
         counterAttack: function() {
-            if(fighter != null) {
+            if(fighter != null && this.isAlive == true) {
                 fighter.HP -= this.counterPower;
                 fighter.updateHP();
             }
@@ -95,6 +94,7 @@ $(document).ready(function() {
     }
 
     var objKylo = {
+        id: "kylo",
         HP: 100,
         initialHP: 100,
         attackPower: 10,
@@ -103,12 +103,15 @@ $(document).ready(function() {
         select: $(".kylo"),
         dead: function() {
             this.isAlive = false;
+            this.select.appendTo(".div-characters");
             this.select.addClass("dead");
         },
         reset: function() {
-            this.HP = 100;
+            this.HP = this.initialHP;
+            this.updateHP();
             this.isAlive = true;
-            this.select.removeClass("dead");
+            this.select.removeClass("dead fighter");
+            this.select.appendTo(".div-characters");
         },
         updateHP: function() {
             $("#kylo > .span-stat").html(this.HP);
@@ -120,7 +123,7 @@ $(document).ready(function() {
             }
         },
         counterAttack: function() {
-            if(fighter != null) {
+            if(fighter != null && this.isAlive == true) {
                 fighter.HP -= this.counterPower;
                 fighter.updateHP();
             }
@@ -128,6 +131,7 @@ $(document).ready(function() {
     }
 
     var objPoe = {
+        id: "poe",
         HP: 100,
         initialHP: 100,
         attackPower: 10,
@@ -136,12 +140,15 @@ $(document).ready(function() {
         select: $(".poe"),
         dead: function() {
             this.isAlive = false;
+            this.select.appendTo(".div-characters");
             this.select.addClass("dead");
         },
         reset: function() {
-            this.HP = 100;
+            this.HP = this.initialHP;
+            this.updateHP();
             this.isAlive = true;
-            this.select.removeClass("dead");
+            this.select.removeClass("dead fighter");
+            this.select.appendTo(".div-characters");
         },
         updateHP: function() {
             $("#poe > .span-stat").html(this.HP);
@@ -153,7 +160,7 @@ $(document).ready(function() {
             }
         },
         counterAttack: function() {
-            if(fighter != null) {
+            if(fighter != null && this.isAlive == true) {
                 fighter.HP -= this.counterPower;
                 fighter.updateHP();
             }
@@ -165,15 +172,36 @@ $(document).ready(function() {
 
     function newGame() {
 
+        // hide overlay
+        
+        $(".fade").removeClass("fadeMain");
+        $(".div-overlay").removeClass("showOverlay");
+        
         // reset
 
+        objRey.reset();
+        objSnoke.reset();
+        objKylo.reset();
+        objPoe.reset();
+
+        round = 0;
+        opponentsRemaining = 3;
+        $("#div-healthBar").css("width", "100%");
+
         // let player select fighter
+
+        selectOpponentOn = false;
+        fightOn = false;
+        $(".fight-button").removeClass("fightable");
 
         $(".character").addClass("selectable");
         selectFighterOn = true;
     }
 
     function newOpponent() {
+
+        fightOn = false;
+        $("#fight-button").removeClass("fightable");
 
         // let player select opponent
 
@@ -182,7 +210,28 @@ $(document).ready(function() {
     }
 
     function checkGame() {
-        // check for defeats, win/loss
+
+        // check for defeats, win/lose
+
+        if(fighter.HP <= 0) {
+
+            lose();
+
+        } else if (opponent.HP <= 0) {
+
+            opponent.dead();
+            opponentsRemaining--;
+
+            if(opponentsRemaining === 0) {
+
+                win();
+
+            } else {
+
+                newOpponent();
+
+            }
+        }
     }
 
     function win() {
@@ -202,15 +251,16 @@ $(document).ready(function() {
     function showOverLay() {
 
         $(".fade").addClass("fadeMain");
-        $(".div-overlay").addClass("showOverlay").animate({opacity:0.9});
+        $("#newGame-button").clone(true).appendTo(".div-overlay");
+        $(".div-overlay").addClass("showOverlay").animate({opacity:0.95});
     }
 
 
     // click listeners
 
-    $(".character").on("click", function() {
+    $(".div-characters > .character").on("click", function() {
         
-        if(selectFighterOn == true) {
+        if(selectFighterOn === true) {
 
             // assign fighter var
             switch($(this).attr("id")) {
@@ -234,33 +284,42 @@ $(document).ready(function() {
             selectFighterOn = false;
             selectOpponentOn = true;
 
-        } else if(selectOpponentOn == true) {
+        } else if(selectOpponentOn === true) {
             
-            // assign opponent var
-            switch($(this).attr("id")) {
-                case "rey":
-                    opponent = objRey;
-                    break;
-                case "snoke":
-                    opponent = objSnoke;
-                    break;
-                case "kylo":
-                    opponent = objKylo;
-                    break;
-                case "poe":
-                    opponent = objPoe;
-                    break;
-            }
-            
-            // move opponent to position
-            $(this).appendTo("#div-opponent");
+            // cannot select fighter as opponent
+            if(fighter.id != $(this).attr("id")) {
 
-            // go to fight mode
-            selectOpponentOn = false;
-            $(".character").removeClass("selectable");
-            fightOn = true;
-        }
-        
+                // assign opponent var
+                switch($(this).attr("id")) {
+                    case "rey":
+                        opponent = objRey;
+                        break;
+                    case "snoke":
+                        opponent = objSnoke;
+                        break;
+                    case "kylo":
+                        opponent = objKylo;
+                        break;
+                    case "poe":
+                        opponent = objPoe;
+                        break;
+                }
+
+                // cannot select dead opponent
+
+                if(opponent.isAlive === true) {
+
+                    // move opponent to position
+                    $(this).appendTo("#div-opponent");
+
+                    // go to fight mode
+                    selectOpponentOn = false;
+                    $(".character").removeClass("selectable");
+                    $("#fight-button").addClass("fightable");
+                    fightOn = true;
+                    }  
+            }                        
+        }   
     })
 
     $("#fight-button").on("click", function() {
@@ -271,23 +330,24 @@ $(document).ready(function() {
            
             round++;
 
-            // animation
-            fighter.select.animate({left:"+=30"}, 200).animate({left:"-=40"}, 200).animate({left:"+=10"});
-            opponent.select.delay(200).animate({left:"-=30"}, 200).animate({left:"+=40"}, 200).animate({left:"-=10"});
-
             // change HP for each
             fighter.attack();
             opponent.counterAttack();
-
-            console.log(fighter.HP, opponent.HP, round);
 
             // adjust health bar
             var b = fighter.HP / fighter.initialHP * 100 + "%";
             console.log(b);
             $("#div-healthBar").css("width", b);
 
-            //check game
+             // animation, checkGame function runs after last
+             fighter.select.animate({left:"+=30"}, 75).animate({left:"-=40"}, 75).animate({left:"+=10"}, 200);
+             opponent.select.delay(200).animate({left:"-=30"}, 75).animate({left:"+=40"}, 75).animate({left:"-=10"}, 200, checkGame);
         }
+    })
+
+    $("#newGame-button").on("click", function() {
+        $(".div-overlay > #newGame-button").detach();
+        newGame();
     })
 
 
