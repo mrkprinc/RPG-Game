@@ -17,13 +17,14 @@ $(document).ready(function() {
     var opponentsRemaining = 3;
     
     // characters
+    // note to self - learn to make these as a prototype
     
     var objRey = {
         id: "rey",
-        HP: 100,
-        initialHP: 100,
-        attackPower: 55,
-        counterPower: 10,
+        HP: 35,
+        initialHP: 35,
+        attackPower: 3,
+        counterPower: 4,
         isAlive: true,
         select: $("#rey"),
         dead: function() {
@@ -57,10 +58,10 @@ $(document).ready(function() {
 
     var objSnoke = {
         id: "snoke",
-        HP: 100,
-        initialHP: 100,
+        HP: 16,
+        initialHP: 16,
         attackPower: 10,
-        counterPower: 50,
+        counterPower: 10,
         isAlive: true,
         select: $(".snoke"),
         selectHP: $("#snoke > .span-stat"),
@@ -95,10 +96,10 @@ $(document).ready(function() {
 
     var objKylo = {
         id: "kylo",
-        HP: 100,
-        initialHP: 100,
-        attackPower: 10,
-        counterPower: 10,
+        HP: 32,
+        initialHP: 32,
+        attackPower: 4,
+        counterPower: 3,
         isAlive: true,
         select: $(".kylo"),
         dead: function() {
@@ -132,10 +133,10 @@ $(document).ready(function() {
 
     var objPoe = {
         id: "poe",
-        HP: 100,
-        initialHP: 100,
-        attackPower: 10,
-        counterPower: 10,
+        HP: 44,
+        initialHP: 44,
+        attackPower: 2,
+        counterPower: 2,
         isAlive: true,
         select: $(".poe"),
         dead: function() {
